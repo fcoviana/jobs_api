@@ -15,6 +15,18 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('title');
+            $table->longText('description');
+            $table->string('local');
+            $table->enum('remote', ['yes', 'no']);
+            $table->integer('type');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
